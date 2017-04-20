@@ -1,7 +1,7 @@
 import serial
 import requests
 
-ser = serial.Serial(port='/dev/tty.usbmodem1431',
+ser = serial.Serial(port='/dev/tty.usbmodem1411',
                     baudrate=9600)
 
 try:
