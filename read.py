@@ -1,4 +1,5 @@
 import serial
+import requests
 
 ser = serial.Serial(port='/dev/tty.usbmodem1431',
                     baudrate=9600)
@@ -19,6 +20,18 @@ if ser.isOpen():
             flag = 1
         else:
             value = str(ser.readline()).replace("\n", "")
-            print (float(value))
+            v = float(value)
+            url = "https://tinacos.herokuapp.com/containers/1/measures.json"
+
+            payload = "{\n\t\"measure\": {\n\t\t\"height\": "+value+"\n\t}\n}"
+            headers = {
+                'content-type': "application/json",
+                'cache-control': "no-cache",
+                'postman-token': "57acf325-4021-c728-4e75-693c082dc459"
+            }
+
+            response = requests.request("POST", url, data=payload, headers=headers)
+            print(response.text)
+            print (v)
 else:
     print ("Error")
